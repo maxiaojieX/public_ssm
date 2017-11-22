@@ -32,6 +32,7 @@ public class ChatController {
                          Model model) {
         Account account = (Account) session.getAttribute("account");
         model.addAttribute("accountId",account.getId());
+        model.addAttribute("accountName",account.getUsername());
         return "chat/chat";
     }
 

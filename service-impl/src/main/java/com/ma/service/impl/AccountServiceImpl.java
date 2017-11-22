@@ -9,10 +9,12 @@ import com.ma.service.AccountService;
 import com.ma.entity.Account;
 import com.ma.example.AccountExample;
 import com.ma.mapper.AccountMapper;
+import com.ma.weixin.WeixinUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +32,8 @@ public class AccountServiceImpl implements AccountService {
     private AccountMapper accountMapper;
     @Autowired
     private Account_DeptMapper account_deptMapper;
+    @Autowired
+    private WeixinUtil weixinUtil;
 
     @Override
     public Account findByName(String name,String password) throws LoginException {
@@ -95,12 +99,19 @@ public class AccountServiceImpl implements AccountService {
         account.setUpdateTime(new Date());
         accountMapper.insertSelective(account);
         int id = account.getId();
+        List<Integer> deptList = new ArrayList<>();
         for(Integer i : did){
             Account_Dept account_dept = new Account_Dept();
             account_dept.setAid(id);
             account_dept.setDid(i);
             account_deptMapper.insertSelective(account_dept);
+
+            deptList.add(i);
         }
+
+        //同步到企业微信
+        weixinUtil.createAccount(id,account.getUsername(),account.getPhone(),deptList);
+
         return id;
     }
 

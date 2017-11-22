@@ -5,8 +5,10 @@ import com.ma.service.DeptService;
 import com.ma.entity.Dept;
 import com.ma.example.DeptExample;
 import com.ma.mapper.DeptMapper;
+import com.ma.weixin.WeixinUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,6 +22,10 @@ public class DeptServiceImpl implements DeptService {
 
     @Autowired
     private DeptMapper deptMapper;
+    @Autowired
+    private WeixinUtil weixinUtil;
+
+
     @Override
     public Dept findById(Integer id) {
         return deptMapper.selectByPrimaryKey(id);
@@ -35,6 +41,7 @@ public class DeptServiceImpl implements DeptService {
      * @param deptName
      */
     @Override
+    @Transactional
     public void saveNewDept(String deptName) throws ServiceException{
         //根据部门名称查找是否已经存在该名称
         DeptExample deptExample = new DeptExample();
@@ -49,6 +56,9 @@ public class DeptServiceImpl implements DeptService {
         dept.setDeptName(deptName);
         dept.setPid(PID);
         deptMapper.insertSelective(dept);
+
+        //同步到企业微信
+        weixinUtil.createDept(deptName,PID,dept.getId());
 
     }
 }

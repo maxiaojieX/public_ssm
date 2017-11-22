@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Bootstrap 3.3.6 -->
 <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+<%--<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.my.css">--%>
 <!-- Font Awesome -->
 <link rel="stylesheet" href="/static/plugins/font-awesome/css/font-awesome.min.css">
 <!-- Theme style -->

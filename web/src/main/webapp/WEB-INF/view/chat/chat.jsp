@@ -35,7 +35,6 @@
 
 
 
-
 <script src="/static/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script src="/static/plugins/layer/layer.js"></script>
 <script src="/static/plugins/art-template/art-template.js"></script>
@@ -45,9 +44,10 @@
 <script>
 
     var accountId= ${accountId};
+    var accountName = "${accountName}";
 
-    var ws = new WebSocket("ws://192.168.1.104:8888");
-
+//    var ws = new WebSocket("ws://192.168.1.104:8888");
+    var ws = new WebSocket("ws://127.0.0.1:8888");
     ws.onopen = function () {
         //存入在线表
         $.post("/chat/saveOnline?accountId="+accountId).done(function (json) {
@@ -63,8 +63,11 @@
 
     ws.onmessage = function (json) {
         var newMessage = json.data;
-        layer.msg(newMessage);
-        var html = "<span>" + newMessage+ "</span><br>";
+        //layer.msg(newMessage);
+        imessage = newMessage.substring(0,newMessage.lastIndexOf("#"));
+
+        //layer.msg(imessage);
+        var html = "<span>" + imessage+ "</span><br>";
         $(html).appendTo("#message");
 
     }
@@ -72,7 +75,7 @@
     //*********************
     $("#sendMessageBtn").click(function () {
         var imessage = $("#messageContent").val();
-        var websocketMessage = accountId+"#"+imessage;
+        var websocketMessage = imessage+"#"+accountName;
         ws.send(websocketMessage);
     });
 
