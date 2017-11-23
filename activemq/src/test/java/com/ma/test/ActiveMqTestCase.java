@@ -1,6 +1,7 @@
 package com.ma.test;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.RedeliveryPolicy;
 import org.junit.Test;
 
 import javax.jms.*;
@@ -15,7 +16,15 @@ public class ActiveMqTestCase {
     public void getMessage() throws JMSException, IOException {
 
         String url = "tcp://127.0.0.1:61616";
-        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
+        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
+
+        //创建自定义重试
+        RedeliveryPolicy redeliveryPolicy = new RedeliveryPolicy();
+        redeliveryPolicy.setMaximumRedeliveries(3);
+        redeliveryPolicy.setInitialRedeliveryDelay(3000);
+        redeliveryPolicy.setRedeliveryDelay(3000);
+
+        connectionFactory.setRedeliveryPolicy(redeliveryPolicy);
 
         Connection connection = connectionFactory.createConnection();
         connection.start();
@@ -32,12 +41,19 @@ public class ActiveMqTestCase {
 
                 try {
                     System.out.println(textMessage.getText());
-
+                    if(1 == 1){
+                        throw new JMSException("手动引发的异常");
+                    }
                     //手动签收消息
                     textMessage.acknowledge();
 
                 } catch (JMSException e) {
                     e.printStackTrace();
+                    try {
+                        session.recover();
+                    } catch (JMSException e1) {
+                        e1.printStackTrace();
+                    }
                 }
 
             }
@@ -72,7 +88,7 @@ public class ActiveMqTestCase {
         messageProducer.setDeliveryMode(DeliveryMode.PERSISTENT);
 
         //6.用session创建消息
-        TextMessage textMessage = session.createTextMessage("ActiveMq-测试1");
+        TextMessage textMessage = session.createTextMessage("ActiveMq-测试2");
 
         //7.用生产者发送消息,并提交事务
         messageProducer.send(textMessage);

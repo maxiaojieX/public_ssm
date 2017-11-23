@@ -1,5 +1,6 @@
 package com.ma.jobs;
 
+import org.apache.xbean.spring.context.XmlWebApplicationContext;
 import org.quartz.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jms.core.JmsTemplate;
