@@ -13,6 +13,7 @@ import com.ma.mapper.CustomerMapper;
 import com.ma.mapper.SaleChanceMapper;
 import com.ma.mapper.TaskMapper;
 import com.ma.service.TaskService;
+import com.ma.weixin.WeixinUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -41,6 +42,8 @@ public class TaskServiceImpl implements TaskService {
     private SaleChanceMapper saleChanceMapper;
     @Autowired
     private SchedulerFactoryBean schedulerFactoryBean;
+    @Autowired
+    private WeixinUtil weixinUtil;
 
     @Override
     @Transactional
@@ -161,6 +164,9 @@ public class TaskServiceImpl implements TaskService {
             }
         }
     }
+
+
+
 
 
 }

@@ -11,6 +11,8 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
     <%@include file="../include/css.jsp"%>
+
+    <link rel="stylesheet" href="/static/layim/css/layim.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -92,5 +94,7 @@
 
 
 <%@include file="../include/js.jsp"%>
+
+
 </body>
 </html>

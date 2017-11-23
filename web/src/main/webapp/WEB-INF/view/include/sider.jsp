@@ -79,7 +79,9 @@
             <li class="header">系统管理</li>
             <!-- 部门员工管理 -->
             <li class="${param.menu == 'list' ? 'active' : ''}"><a href="/account/list2"><i class="fa fa-users"></i> <span>员工管理</span></a></li>
-            <li><a href="/chat/toChat"   onclick="window.open(this.href,'_blank','scrollbars=0,resizable=0,top=123,left=281,width=680,height=480');return    false"><i class="fa fa-users"></i> <span>公司微信</span></a></li>
+
+            <%--<li><a href="/chat/toChat"   onclick="window.open(this.href,'_blank','scrollbars=0,resizable=0,top=123,left=281,width=680,height=480');return    false"><i class="fa fa-users"></i> <span>公司微信</span></a></li>--%>
+            <li id="imTest"><a href="/chat/toChat"><i class="fa fa-users"></i> <span>公司微信</span></a></li>
             <!--<li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
             <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>-->
         </ul>
@@ -87,3 +89,6 @@
     <!-- /.sidebar -->
 </aside>
 
+<%--<div class="layui-layer layui-layer-page layui-box layui-layim-chat" id="layui-layer3" type="page" times="3" showtime="0" contype="string" style="z-index: 19891017; width: 600px; top: -1px; left: 382px; min-width: 500px; min-height: 420px; background-image: url(&quot;http://res.layui.com/layui/dist/css/modules/layim/skin/3.jpg&quot;);">--%>
+
+<%--</div>--%>

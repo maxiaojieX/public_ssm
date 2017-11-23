@@ -33,7 +33,7 @@ public class ChatController {
         Account account = (Account) session.getAttribute("account");
         model.addAttribute("accountId",account.getId());
         model.addAttribute("accountName",account.getUsername());
-        return "chat/chat";
+        return "chat/test";
     }
 
     @PostMapping("/saveOnline")
