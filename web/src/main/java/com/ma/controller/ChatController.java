@@ -1,12 +1,12 @@
 package com.ma.controller;
 
+import com.ma.controller.auth.ShiroUtil;
 import com.ma.entity.Account;
 import com.ma.entity.AccountOnline;
 import com.ma.service.WebSocketService;
-import com.ma.util.AjaxStateJson;
+import com.ma.service.impl.util.AjaxStateJson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +30,8 @@ public class ChatController {
     @GetMapping("/toChat")
     public String toChat(HttpSession session,
                          Model model) {
-        Account account = (Account) session.getAttribute("account");
+        //Account account = (Account) session.getAttribute("account");
+        Account account = ShiroUtil.getCurretnAccount();
         model.addAttribute("accountId",account.getId());
         model.addAttribute("accountName",account.getUsername());
         return "chat/test";

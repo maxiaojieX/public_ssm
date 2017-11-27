@@ -4,27 +4,22 @@ import com.ma.entity.Account;
 import com.ma.entity.Disk;
 import com.ma.exception.ServiceException;
 import com.ma.service.SkyDriverService;
-import com.ma.util.AjaxStateJson;
+import com.ma.service.impl.util.AjaxStateJson;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2017/11/15 0015.

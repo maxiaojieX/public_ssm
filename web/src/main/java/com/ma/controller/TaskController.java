@@ -1,12 +1,13 @@
 package com.ma.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.ma.controller.auth.ShiroUtil;
 import com.ma.entity.Account;
 import com.ma.entity.Task;
 import com.ma.exception.ServiceException;
 import com.ma.responsestatus.Status403Exception;
 import com.ma.service.TaskService;
-import com.ma.util.AjaxStateJson;
+import com.ma.service.impl.util.AjaxStateJson;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,8 @@ public class TaskController {
     public String task(Model model,
                        @RequestParam(name = "p",required = false,defaultValue = "1") Integer pageNum,
                        HttpSession session) {
-        Account account = (Account) session.getAttribute("account");
+        //Account account = (Account) session.getAttribute("account");
+        Account account = ShiroUtil.getCurretnAccount();
 
         PageInfo<Task> page = taskService.findAllByAccountIdWithCNameAndSName(account.getId(),pageNum);
         model.addAttribute("page",page);
@@ -61,7 +63,8 @@ public class TaskController {
                            @RequestParam(required = false,defaultValue = "") String remindTime,
                            Model model,HttpSession session) {
 
-        Account account = (Account) session.getAttribute("account");
+        //Account account = (Account) session.getAttribute("account");
+        Account account = ShiroUtil.getCurretnAccount();
 
         publicSave(title,finishTime,remindTime,account);
 
@@ -73,7 +76,8 @@ public class TaskController {
     @ResponseBody
     public AjaxStateJson delete(@PathVariable Integer id,
                                 HttpSession session) {
-        Account account = (Account) session.getAttribute("account");
+        //Account account = (Account) session.getAttribute("account");
+        Account account = ShiroUtil.getCurretnAccount();
         Task task = taskService.findByTaskId(id);
 
         if(task == null){
@@ -104,7 +108,8 @@ public class TaskController {
                        @RequestParam(required = false,defaultValue = "") String remindTime,
                        Model model,HttpSession session) {
         //删除
-        Account account = (Account) session.getAttribute("account");
+        //Account account = (Account) session.getAttribute("account");
+        Account account = ShiroUtil.getCurretnAccount();
         Task task = taskService.findByTaskId(oldId);
 
         if(task == null){
@@ -141,7 +146,8 @@ public class TaskController {
                                                   @RequestParam(required = false) Integer cid,
                                                   @RequestParam(required = false) Integer sid,
                                                   HttpSession session) {
-        Account account = (Account) session.getAttribute("account");
+        //Account account = (Account) session.getAttribute("account");
+        Account account = ShiroUtil.getCurretnAccount();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
@@ -176,7 +182,8 @@ public class TaskController {
     @ResponseBody
     public AjaxStateJson done(Integer taskId,
                               HttpSession session) {
-        Account account = (Account) session.getAttribute("account");
+        //Account account = (Account) session.getAttribute("account");
+        Account account = ShiroUtil.getCurretnAccount();
         Task task = taskService.findByTaskId(taskId);
 
         if(task == null){

@@ -3,7 +3,7 @@ package com.ma.controller;
 import com.ma.entity.Dept;
 import com.ma.exception.ServiceException;
 import com.ma.service.DeptService;
-import com.ma.util.AjaxStateJson;
+import com.ma.service.impl.util.AjaxStateJson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package com.ma.util;
+package com.ma.service.impl.util;
 
 
 import java.util.List;

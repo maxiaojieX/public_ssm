@@ -7,6 +7,10 @@ import com.ma.service.AccountService;
 import com.ma.service.DeptService;
 import com.ma.service.impl.AccountServiceImpl;
 import jdk.nashorn.internal.objects.NativeJSON;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,11 +53,19 @@ public class CenterController {
 
         try {
             //account代表phone  使用phone作为账号登录
-            Account account1 = accountService.findByPhone(account,password);
+            //Account account1 = accountService.findByPhone(account,password);
 
-            session.setAttribute("account",account1);
+            //session.setAttribute("account",account1);
+
+            Subject subject = SecurityUtils.getSubject();
+            UsernamePasswordToken usernamePasswordToken =
+                    new UsernamePasswordToken(account,password,true);
+            subject.login(usernamePasswordToken);
+
+
             return "redirect:/account";
-        }catch (LoginException lo){
+        }catch (AuthenticationException e){
+            e.printStackTrace();
             redirectAttributes.addFlashAttribute("message","账号或密码错误");
             return "redirect:/";
         }

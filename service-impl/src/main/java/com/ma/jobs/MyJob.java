@@ -1,8 +1,7 @@
 package com.ma.jobs;
 
-import org.apache.xbean.spring.context.XmlWebApplicationContext;
+import com.ma.service.impl.util.MySpringContext;
 import org.quartz.*;
-import org.springframework.context.ApplicationContext;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 
@@ -25,10 +24,14 @@ public class MyJob implements Job {
         System.out.println("***********" + message + "*************");
 
         //把消息添加至ActiveMQ
-        try {
-            ApplicationContext applicationContext = (ApplicationContext) jobExecutionContext.getScheduler().getContext().get("springApplicationContext");
+//        try {
+//            ApplicationContext applicationContext = (ApplicationContext) jobExecutionContext.getScheduler().getContext().get("springApplicationContext");
+//            JmsTemplate jmsTemplate = (JmsTemplate) applicationContext.getBean("jmsTemplate");
 
-            JmsTemplate jmsTemplate = (JmsTemplate) applicationContext.getBean("jmsTemplate");
+            //*****测试区
+            JmsTemplate jmsTemplate = (JmsTemplate) MySpringContext.wantBean("jmsTemplate");
+            //*****
+
             jmsTemplate.send("wexinMessage-Quere", new MessageCreator() {
                 @Override
                 public Message createMessage(Session session) throws JMSException {
@@ -38,9 +41,9 @@ public class MyJob implements Job {
                 }
             });
 
-        } catch (SchedulerException e) {
-            e.printStackTrace();
-        }
+//        } catch (SchedulerException e) {
+//            e.printStackTrace();
+//        }
 
 
     }

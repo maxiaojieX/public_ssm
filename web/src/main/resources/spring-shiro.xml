@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--把ShiroRealm交给Spring管理-->
+    <bean id="shiroRealm" class="com.ma.controller.auth.ShiroRealm">
+
+    </bean>
+    <!--使用shiro缓存-->
+    <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
+    <!--创建securityManager，并把shiro和缓存传进来-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="shiroRealm"/>
+        <property name="cacheManager" ref="cacheManager"/>
+    </bean>
+
+    <!--配置表单鉴别器,该id需要和web.xml中的过滤器name一致-->
+    <bean id="formAuthenticationFilter" class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter">
+        <property name="usernameParam" value="account"/>
+        <property name="passwordParam" value="password"/>
+        <property name="loginUrl" value="/"/>
+    </bean>
+
+    <!--cookie-->
+    <bean id="simpleCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg name="name" value="rememberMe"/>
+        <property name="httpOnly" value="true"/>
+        <property name="maxAge" value="604800"/>
+    </bean>
+
+    <!--配置shiroFilter-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!--登录的url-->
+        <property name="loginUrl" value="/login"/>
+        <!--登录成功的url-->
+        <property name="successUrl" value="/account"/>
+        <!--认证失败的url-->
+        <!--<property name="unauthorizedUrl" ref="/"/>-->
+        <!--配置securityManager-->
+        <property name="securityManager" ref="securityManager"/>
+        <!--配置自定义filter-->
+        <property name="filters">
+            <map>
+                <entry key="authc" value-ref="formAuthenticationFilter"/>
+                <entry key="roles">
+                    <bean class="com.ma.controller.auth.MyRolesFilter"/>
+                </entry>
+            </map>
+        </property>
+        <!--验证与否-->
+        <property name="filterChainDefinitions">
+            <value>
+                /static/** = anon
+                /favicon.ico = anon
+                /login = anon
+                /** = authc
+            </value>
+        </property>
+
+
+    </bean>
+
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+
+</beans>

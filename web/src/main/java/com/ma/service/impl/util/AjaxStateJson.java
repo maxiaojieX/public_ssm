@@ -1,4 +1,4 @@
-package com.ma.util;
+package com.ma.service.impl.util;
 
 /**
  * Created by Administrator on 2017/11/9 0009.

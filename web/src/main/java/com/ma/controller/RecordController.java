@@ -1,6 +1,7 @@
 package com.ma.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.ma.controller.auth.ShiroUtil;
 import com.ma.entity.Account;
 import com.ma.entity.Customer;
 import com.ma.entity.GenjinRecord;
@@ -9,7 +10,7 @@ import com.ma.responsestatus.Status403Exception;
 import com.ma.responsestatus.Stauts404Exception;
 import com.ma.service.CustomerService;
 import com.ma.service.RecordService;
-import com.ma.util.AjaxStateJson;
+import com.ma.service.impl.util.AjaxStateJson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,7 +36,8 @@ public class RecordController {
     public String recordMy(Model model,
                            @RequestParam(name = "p",required = false,defaultValue = "1") Integer pageNum,
                            HttpSession session){
-        Account account = (Account) session.getAttribute("account");
+        //Account account = (Account) session.getAttribute("account");
+        Account account = ShiroUtil.getCurretnAccount();
         //获取所有该员工下的销售机会
         PageInfo<SaleChance> saleChancePageInfo = recordService.findAll(account.getId(),pageNum);
         model.addAttribute("page",saleChancePageInfo);
@@ -51,7 +53,8 @@ public class RecordController {
                             Model model,
                             RedirectAttributes redirectAttributes,
                             HttpSession session){
-        Account account = (Account) session.getAttribute("account");
+        //Account account = (Account) session.getAttribute("account");
+        Account account = ShiroUtil.getCurretnAccount();
         int recordId = recordService.saveChance(saleChance,account);
 
         redirectAttributes.addFlashAttribute("message","新增成功");
@@ -122,7 +125,8 @@ public class RecordController {
     public SaleChance opreationFilter(HttpSession session,Integer chanceId){
 
         SaleChance saleChance = recordService.findByRecordId(chanceId);
-        Account account = (Account) session.getAttribute("account");
+        //Account account = (Account) session.getAttribute("account");
+        Account account = ShiroUtil.getCurretnAccount();
         if(saleChance == null){
             throw new Stauts404Exception("该销售机会不存在");
         }

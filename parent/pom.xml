@@ -15,6 +15,7 @@
         <module>../web</module>
         <module>../weixin</module>
         <module>../itest</module>
+        <module>../Util</module>
     </modules>
     <packaging>pom</packaging>
 

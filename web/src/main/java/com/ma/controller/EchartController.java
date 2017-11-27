@@ -2,7 +2,7 @@ package com.ma.controller;
 
 import com.ma.service.CustomerService;
 import com.ma.service.RecordService;
-import com.ma.util.AjaxStateJson;
+import com.ma.service.impl.util.AjaxStateJson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

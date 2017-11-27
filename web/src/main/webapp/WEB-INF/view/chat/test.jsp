@@ -47,8 +47,8 @@
 <button id="test">按钮</button>
 <div id="box" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-    <div id="bar" >复仇者讨论组</div>
-    <div id="content">这里是内容</div>
+    <div id="bar" >讨论组</div>
+    <div id="content">内容</div>
     </div>
 </div>
 
@@ -103,22 +103,22 @@
 
     dragBox(document.querySelector("#bar"), document.querySelector("#box"));
 </script>
+$("#test").click(function () {
 
+$("#box").modal({
+show:true,
+backdrop:false
+});
+
+
+});
 <script src="/static/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="/static/bootstrap/js/bootstrap.min.js"></script>
 <script src="/static/layui/layui.all.js"></script>
 <script>
 
-    $("#test").click(function () {
 
-        $("#box").modal({
-            show:true,
-            backdrop:false
-        });
-
-
-    });
 
 
 </script>

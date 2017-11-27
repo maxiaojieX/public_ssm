@@ -1,6 +1,7 @@
 package com.ma.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.ma.controller.auth.ShiroUtil;
 import com.ma.entity.Account;
 import com.ma.entity.Customer;
 import com.ma.entity.CustomerSource;
@@ -12,7 +13,7 @@ import com.ma.service.AccountService;
 import com.ma.service.CustomerService;
 import com.ma.service.CustomerSourceService;
 import com.ma.service.RecordService;
-import com.ma.util.AjaxStateJson;
+import com.ma.service.impl.util.AjaxStateJson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,8 +62,9 @@ public class CustomController {
             return "custom/customerDetails";
         }else {
             //获取该员工下的所有客户
-            Account account = (Account) session.getAttribute("account");
+//            Account account = (Account) session.getAttribute("account");
 
+            Account account = ShiroUtil.getCurretnAccount();
             PageInfo<Customer> customerPageInfo = customerService.findAllByAccountId(account.getId(),pageNum);
 
             model.addAttribute("page",customerPageInfo);
@@ -79,7 +81,8 @@ public class CustomController {
         //获取客户来源表数据，并返回前端
         List<CustomerSource> customerSourceList = customerSourceService.findAll();
         model.addAttribute("customerSource",customerSourceList);
-        Account account = (Account) session.getAttribute("account");
+        //Account account = (Account) session.getAttribute("account");
+        Account account = ShiroUtil.getCurretnAccount();
         model.addAttribute("accountId",account.getId());
         return "/custom/customerAdd";
     }
@@ -99,7 +102,8 @@ public class CustomController {
         List<CustomerSource> customerSourceList = customerSourceService.findAll();
         model.addAttribute("customerSource",customerSourceList);
 
-        Account account = (Account) session.getAttribute("account");
+        //Account account = (Account) session.getAttribute("account");
+        Account account = ShiroUtil.getCurretnAccount();
         model.addAttribute("accountId",account.getId());
 
         //操作权限过滤
@@ -182,7 +186,8 @@ public class CustomController {
     @ResponseBody
     public AjaxStateJson getCustomer(@PathVariable Integer id,
                                      HttpSession session){
-        Account account = (Account) session.getAttribute("account");
+        //Account account = (Account) session.getAttribute("account");
+        Account account = ShiroUtil.getCurretnAccount();
         customerService.getPublicCustomer(id,account.getId());
         AjaxStateJson ajaxStateJson = new AjaxStateJson("success","认领成功!");
         return ajaxStateJson;
@@ -196,7 +201,8 @@ public class CustomController {
     @GetMapping("/export/csv")
     public void exportToCsv(HttpSession session,
                             HttpServletResponse response) {
-        Account account = (Account) session.getAttribute("account");
+        //Account account = (Account) session.getAttribute("account");
+        Account account = ShiroUtil.getCurretnAccount();
         try {
 
             //设置响应类型，默认下载名称，响应头
@@ -217,7 +223,8 @@ public class CustomController {
     @GetMapping("/export/xls")
     public void exportToXls(HttpServletResponse response,
                             HttpSession session){
-        Account account = (Account) session.getAttribute("account");
+        //Account account = (Account) session.getAttribute("account");
+        Account account = ShiroUtil.getCurretnAccount();
 
         try {
 
@@ -255,7 +262,8 @@ public class CustomController {
             throw new Stauts404Exception("该客户不存在");
         }
         //如果存在判断该客户是否属于自己的客户
-        Account account = (Account) session.getAttribute("account");
+        //Account account = (Account) session.getAttribute("account");
+        Account account = ShiroUtil.getCurretnAccount();
         if(customer0.getAccountId() != account.getId()){
             //不属于自己客户
             throw new Status403Exception("对不起，您暂无权查看该客户");
