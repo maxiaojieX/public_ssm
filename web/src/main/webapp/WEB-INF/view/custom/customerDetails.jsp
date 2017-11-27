@@ -116,7 +116,7 @@
                             <h3 class="box-title">日程安排</h3>　　　　　　　　　　　　　　　　<small><button id="otherSaveTaskBtn" class="btn btn-success btn-xs"><i class="fa fa-plus"></i></button></small>
                         </div>
                         <div class="box-body">
-
+                            暂无安排!
                         </div>
                     </div>
                     <div class="box">
@@ -124,7 +124,7 @@
                             <h3 class="box-title">相关资料</h3>
                         </div>
                         <div class="box-body">
-
+                            暂无相关资料!
                         </div>
                     </div>
                 </div>

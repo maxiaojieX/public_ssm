@@ -1,6 +1,8 @@
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!-- 顶部导航栏部分 -->
 <header class="main-header">
     <!-- Logo -->
@@ -26,7 +28,7 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="/static/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                        <span class="hidden-xs">李美苏</span>
+                        <span class="hidden-xs"><shiro:principal property="username"/></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
@@ -34,14 +36,14 @@
                             <img src="/static/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                             <p>
-                                李美苏
+                                <shiro:principal property="username"/>
                                 <small>海外事业部</small>
                             </p>
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="/profile" class="btn btn-default btn-flat">个人设置</a>
+                                <a href="#" class="btn btn-default btn-flat">个人设置</a>
                             </div>
                             <div class="pull-right">
                                 <a href="/logout" class="btn btn-default btn-flat">安全退出</a>

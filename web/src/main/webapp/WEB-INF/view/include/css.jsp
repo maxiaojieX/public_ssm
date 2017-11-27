@@ -24,6 +24,8 @@ folder instead of downloading all of them to reduce the load. -->
         left: 350px;
         width: 600px;
         border-radius: 65px;
+        display: none;
+
     }
     #bar {
         padding-left:20px;

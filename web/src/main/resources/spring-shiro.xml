@@ -20,6 +20,7 @@
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="shiroRealm"/>
         <property name="cacheManager" ref="cacheManager"/>
+        <property name="rememberMeManager" ref="rememberMeManager"/>
     </bean>
 
     <!--配置表单鉴别器,该id需要和web.xml中的过滤器name一致-->
@@ -36,14 +37,19 @@
         <property name="maxAge" value="604800"/>
     </bean>
 
+    <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <property name="cookie" ref="simpleCookie"/>
+        <property name="cipherKey" value="#{T(org.apache.shiro.codec.Base64).decode('4AvVhmFLUs0KTA3Kprsdag==')}"/>
+    </bean>
+
     <!--配置shiroFilter-->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <!--登录的url-->
-        <property name="loginUrl" value="/login"/>
+        <property name="loginUrl" value="/"/>
         <!--登录成功的url-->
         <property name="successUrl" value="/account"/>
         <!--认证失败的url-->
-        <!--<property name="unauthorizedUrl" ref="/"/>-->
+        <property name="unauthorizedUrl" value="/static/html/40x.html"/>
         <!--配置securityManager-->
         <property name="securityManager" ref="securityManager"/>
         <!--配置自定义filter-->
@@ -61,6 +67,7 @@
                 /static/** = anon
                 /favicon.ico = anon
                 /login = anon
+                /account = roles["开发部"]
                 /** = authc
             </value>
         </property>

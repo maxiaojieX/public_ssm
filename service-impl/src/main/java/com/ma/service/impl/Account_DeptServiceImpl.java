@@ -7,6 +7,8 @@ import com.ma.mapper.Account_DeptMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/11/6 0006.
  */
@@ -21,5 +23,12 @@ public class Account_DeptServiceImpl implements Account_DeptService {
         account_dept.setAid(aid);
         account_dept.setDid(did);
         account_deptMapper.insert(account_dept);
+    }
+
+    @Override
+    public List<Account_Dept> findByAccountId(Integer accountId) {
+        Account_DeptExample account_deptExample = new Account_DeptExample();
+        account_deptExample.createCriteria().andAidEqualTo(accountId);
+        return account_deptMapper.selectByExample(account_deptExample);
     }
 }

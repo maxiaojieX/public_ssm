@@ -1,5 +1,6 @@
 package com.ma.controller;
 
+import com.ma.controller.auth.ShiroUtil;
 import com.ma.entity.Account;
 import com.ma.entity.Dept;
 import com.ma.exception.LoginException;
@@ -36,6 +37,16 @@ public class CenterController {
 
     @GetMapping("/")
     public String hello() {
+        Subject subject = ShiroUtil.getSubject();
+
+        if(subject.isAuthenticated()){
+            subject.logout();
+        }
+
+        if(!subject.isAuthenticated() && subject.isRemembered()) {
+            return "redirect:/account";
+        }
+
         return "index";
     }
 
@@ -47,7 +58,7 @@ public class CenterController {
      * @return
      */
     @PostMapping("/login")
-    public String login(String account, String password,
+    public String login(String account, String password,boolean rememberMe,
                         RedirectAttributes redirectAttributes,
                         HttpSession session) {
 
@@ -59,7 +70,7 @@ public class CenterController {
 
             Subject subject = SecurityUtils.getSubject();
             UsernamePasswordToken usernamePasswordToken =
-                    new UsernamePasswordToken(account,password,true);
+                    new UsernamePasswordToken(account,password,rememberMe);
             subject.login(usernamePasswordToken);
 
 
@@ -72,6 +83,10 @@ public class CenterController {
     }
 
 
-
+    @GetMapping("/logout")
+    public String logout(RedirectAttributes redirectAttributes) {
+        SecurityUtils.getSubject().logout();
+        return "redirect:/";
+    }
 
 }

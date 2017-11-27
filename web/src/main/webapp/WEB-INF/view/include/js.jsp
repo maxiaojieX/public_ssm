@@ -49,18 +49,17 @@
 
     dragBox(document.querySelector("#bar"), document.querySelector("#box"));
 </script>
-<scrtipt>
-    $("#imTest").click(function () {
 
-    $("#box").modal({
-    show:true,
-    backdrop:false
-    });
-
-
-    });
-</scrtipt>
 <script src="/static/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script>
+
+    $("#imTest").click(function () {
+        $("#box").attr("display","block");
+    });
+
+
+
+</script>
 <!-- Bootstrap 3.3.6 -->
 <script src="/static/bootstrap/js/bootstrap.min.js"></script>
 <!-- SlimScroll -->

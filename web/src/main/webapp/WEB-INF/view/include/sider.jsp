@@ -2,6 +2,7 @@
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!-- 左侧菜单栏 -->
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
@@ -78,10 +79,11 @@
             <li><a href="/SkyDrive/our"    onclick="window.open(this.href,'_blank','scrollbars=0,resizable=0,top=123,left=281,width=680,height=480');return    false"><i class="fa fa-share-alt"></i> <span>公司网盘</span></a></li>
             <li class="header">系统管理</li>
             <!-- 部门员工管理 -->
-            <li class="${param.menu == 'list' ? 'active' : ''}"><a href="/account/list2"><i class="fa fa-users"></i> <span>员工管理</span></a></li>
-
+            <shiro:hasRole name="开发部">
+                <li class="${param.menu == 'list' ? 'active' : ''}"><a href="/account/list2"><i class="fa fa-users"></i> <span>员工管理</span></a></li>
+            </shiro:hasRole>
             <%--<li><a href="/chat/toChat"   onclick="window.open(this.href,'_blank','scrollbars=0,resizable=0,top=123,left=281,width=680,height=480');return    false"><i class="fa fa-users"></i> <span>公司微信</span></a></li>--%>
-            <li id="imTest"><a><i class="fa fa-users"></i> <span>公司微信</span></a></li>
+            <li><a id="imTest"><i class="fa fa-users"></i> <span>公司微信</span></a></li>
             <!--<li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
             <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>-->
         </ul>
@@ -92,7 +94,7 @@
 <%--<div class="layui-layer layui-layer-page layui-box layui-layim-chat" id="layui-layer3" type="page" times="3" showtime="0" contype="string" style="z-index: 19891017; width: 600px; top: -1px; left: 382px; min-width: 500px; min-height: 420px; background-image: url(&quot;http://res.layui.com/layui/dist/css/modules/layim/skin/3.jpg&quot;);">--%>
 
 <%--</div>--%>
-<div id="box" class="modal fade" tabindex="-1" role="dialog">
+<div id="box"  tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div id="bar" >讨论组</div>
         <div id="content">内容</div>

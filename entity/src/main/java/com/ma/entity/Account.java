@@ -1,9 +1,10 @@
 package com.ma.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Account {
+public class Account  implements Serializable{
     private Integer id;
 
     private String username;
