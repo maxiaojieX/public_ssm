@@ -68,10 +68,9 @@
                 /favicon.ico = anon
                 /login = anon
                 /account = roles["开发部"]
-                /** = authc
+                /** = user
             </value>
         </property>
-
 
     </bean>
 

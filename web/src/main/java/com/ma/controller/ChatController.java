@@ -34,7 +34,7 @@ public class ChatController {
         Account account = ShiroUtil.getCurretnAccount();
         model.addAttribute("accountId",account.getId());
         model.addAttribute("accountName",account.getUsername());
-        return "chat/test";
+        return "chat/chats";
     }
 
     @PostMapping("/saveOnline")

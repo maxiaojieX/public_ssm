@@ -1,9 +1,11 @@
 package com.ma.controller;
 
 import com.ma.entity.Account;
+import com.ma.entity.Account_Dept;
 import com.ma.exception.ServiceException;
 import com.ma.service.AccountService;
 import com.ma.service.Account_DeptService;
+import com.ma.service.DeptService;
 import com.ma.service.impl.util.AjaxStateJson;
 import com.ma.service.impl.util.DataTablesResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class AccountController {
     private AccountService accountService;
     @Autowired
     private Account_DeptService account_deptService;
+    @Autowired
+    private DeptService deptService;
 
     @GetMapping
     public String acountHome() {
@@ -99,7 +103,21 @@ public class AccountController {
         return new AjaxStateJson("success","删除成功");
     }
 
+    @PostMapping("/delDept")
+    @ResponseBody
+    public AjaxStateJson deleteDept(Integer id) {
+        System.out.println("id:  => "+id);
+        List<Account_Dept> account_deptList = account_deptService.findByDeptId(id);
+        System.out.println("account_deptList - > "+account_deptList);
+        if(account_deptList.size() == 0) {
+            //可以删
+            deptService.deleteDeptById(id);
+            return new AjaxStateJson("success","删除成功");
+        }else{
+            return new AjaxStateJson("error","该部门下人员不为空，不允许删除");
+        }
 
+    }
 
 
 }

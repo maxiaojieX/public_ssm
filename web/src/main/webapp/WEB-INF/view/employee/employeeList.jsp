@@ -15,7 +15,15 @@
     
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <style>
+        #addDept{
+            display: inline-block;
+        }
+        #delDept{
+            display: inline-block;
+        }
+
+    </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
@@ -37,16 +45,17 @@
 
             <div class="row">
                 <div class="col-md-2">
-                    <div class="box">
+                    <div class="box" style="width: 185px">
                         <div class="box-body">
                             <button class="btn btn-default" id="addDept">添加部门</button>
+                            <button class="btn btn-default" id="delDept" style="width: 78px">删除部门</button>
                             <ul id="ztree" class="ztree"></ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-10">
                     <!-- Default box -->
-                    <div class="box">
+                    <div class="box" >
                         <div class="box-header with-border">
                             <h3 class="box-title">员工管理</h3>
                             <div class="box-tools pull-right">
@@ -130,8 +139,35 @@
 <script src="/static/plugins/validate/jquery.validate.min.js"></script>
 <script>
     $(function(){
+        var readyTree;
 
-//    添加部门
+        $("#delDept").click(function () {
+            if(readyTree == null) {
+                layer.msg("你还未选择要删除的部门");
+            }else if(readyTree == 1){
+                layer.msg("不能删除根部门");
+            }else{
+                $.post("/account/delDept?id="+readyTree).done(function (json) {
+                    if(json.state == "success"){
+                        layer.msg(json.message);
+//                        ****
+                        var treeObj = $.fn.zTree.getZTreeObj("ztree");
+                        treeObj.reAsyncChildNodes(null, "refresh");
+
+                    }else{
+                        layer.msg(json.message);
+                    }
+                }).error(function () {
+                    layer.msg("服务器异常");
+                });
+            }
+        });
+
+
+
+
+        //************************************
+        //    添加部门
         $("#addDept").click(function () {
             layer.prompt({title: '请输入部门名称', formType: 3}, function(text, index){
                 layer.close(index);
@@ -328,6 +364,7 @@
             },
             callback: {
                 onClick: function (event, treeId, treeNode, clickFlag) {
+                    readyTree = treeNode.id;
                     if (treeNode.id != 1) {
                         $("#deptId").val(treeNode.id);
 //                        刷新table

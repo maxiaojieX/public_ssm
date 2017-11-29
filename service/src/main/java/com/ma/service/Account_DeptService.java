@@ -13,4 +13,6 @@ public interface Account_DeptService {
     void save(int aid,int did);
 
     List<Account_Dept> findByAccountId(Integer accountId);
+
+    List<Account_Dept> findByDeptId(Integer deptId);
 }

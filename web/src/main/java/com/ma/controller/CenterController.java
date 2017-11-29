@@ -12,7 +12,10 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.util.SavedRequest;
+import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -42,7 +46,6 @@ public class CenterController {
         if(subject.isAuthenticated()){
             subject.logout();
         }
-
         if(!subject.isAuthenticated() && subject.isRemembered()) {
             return "redirect:/account";
         }
@@ -58,9 +61,10 @@ public class CenterController {
      * @return
      */
     @PostMapping("/login")
-    public String login(String account, String password,boolean rememberMe,
+    public String login(String account, String password, boolean rememberMe,
                         RedirectAttributes redirectAttributes,
-                        HttpSession session) {
+                        HttpSession session,
+                        HttpServletRequest request) {
 
         try {
             //account代表phone  使用phone作为账号登录
@@ -73,8 +77,13 @@ public class CenterController {
                     new UsernamePasswordToken(account,password,rememberMe);
             subject.login(usernamePasswordToken);
 
+            String url = "/account";
+            SavedRequest savedRequest = WebUtils.getSavedRequest(request);
+            if(savedRequest != null) {
+                url = savedRequest.getRequestUrl();
+            }
 
-            return "redirect:/account";
+            return "redirect:" + url;
         }catch (AuthenticationException e){
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message","账号或密码错误");

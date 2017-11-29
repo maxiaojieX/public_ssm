@@ -61,4 +61,9 @@ public class DeptServiceImpl implements DeptService {
         weixinUtil.createDept(deptName,PID,dept.getId());
 
     }
+
+    @Override
+    public void deleteDeptById(Integer id) {
+        deptMapper.deleteByPrimaryKey(id);
+    }
 }

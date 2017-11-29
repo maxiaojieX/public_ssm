@@ -15,4 +15,6 @@ public interface DeptService {
     List<Dept> findAll();
 
     void saveNewDept(String deptName) throws ServiceException;
+
+    void deleteDeptById(Integer id);
 }
