@@ -19,6 +19,36 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        .ibox{
+            width: 1100px;
+            height: 415px;
+            background-color: white;
+            z-index: inherit;
+            overflow: auto;
+        }
+        .sendbox{
+            width: 1100px;
+            height: 150px;
+            background-color: white;
+            z-index: inherit;
+            position: relative;
+            top:-20px;
+        }
+        .centerbox{
+            width: 1100px;
+            height: 10px;
+            background-color: #bdc3c7;
+            z-index: inherit;
+            position: relative;
+            top: -20px;
+        }
+        .ibtn{
+            position: relative;
+            top: -70px;
+            left: 990px;
+        }
+    </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
@@ -34,57 +64,68 @@
 
     <!-- 右侧内容部分 -->
     <div class="content-wrapper">
+        <section class="content">
+            <div class="ibox">
+                宇腾：我是智障
 
+            </div>
+            <div class="centerbox"></div>
+            <div class="sendbox">
 
-
-
+            </div>
+            <button type="button" class="btn btn-default ibtn">发送</button>
+        </section>
     </div>
 
 
 </div>
 
 <%@include file="../include/js.jsp"%>
-<%--<script>--%>
+<script src="/static/plugins/layer/layer.js"></script>
+<script>
 
-    <%--var accountId= ${accountId};--%>
-    <%--var accountName = "${accountName}";--%>
+    var accountId= ${accountId};
+    var accountName = "${accountName}";
 
-    <%--//    var ws = new WebSocket("ws://192.168.1.104:8888");--%>
-    <%--var ws = new WebSocket("ws://127.0.0.1:8888");--%>
-    <%--ws.onopen = function () {--%>
-        <%--//存入在线表--%>
-        <%--$.post("/chat/saveOnline?accountId="+accountId).done(function (json) {--%>
-            <%--if(json.state == "success"){--%>
-                <%--layer.msg("加入群聊...");--%>
-            <%--}--%>
-        <%--}).error(function () {--%>
-            <%--layer.msg("您的网络好像有点慢...");--%>
-        <%--});--%>
+    var ws = new WebSocket("ws://192.168.1.104:8888");
+//    var ws = new WebSocket("ws://127.0.0.1:8888");
+    ws.onopen = function () {
+        //存入在线表
+        $.post("/chat/saveOnline?accountId="+accountId).done(function (json) {
+            if(json.state == "success"){
+                layer.msg("加入群聊...");
+            }
+        }).error(function () {
+            layer.msg("您的网络好像有点慢...");
+        });
 
-    <%--}--%>
-
-
-    <%--ws.onmessage = function (json) {--%>
-        <%--var newMessage = json.data;--%>
-        <%--//layer.msg(newMessage);--%>
-        <%--imessage = newMessage.substring(0,newMessage.lastIndexOf("#"));--%>
-
-        <%--//layer.msg(imessage);--%>
-        <%--var html = "<span>" + imessage+ "</span><br>";--%>
-        <%--$(html).appendTo("#message");--%>
-
-    <%--}--%>
-
-    <%--//*********************--%>
-    <%--$("#sendMessageBtn").click(function () {--%>
-        <%--var imessage = $("#messageContent").val();--%>
-        <%--var websocketMessage = imessage+"#"+accountName;--%>
-        <%--ws.send(websocketMessage);--%>
-    <%--});--%>
+    }
 
 
+    ws.onmessage = function (json) {
+        var newMessage = json.data;
+        //layer.msg(newMessage);
+        imessage = newMessage.substring(0,newMessage.lastIndexOf("#"));
 
-<%--</script>--%>
+        //layer.msg(imessage);
+        var html = "<span>" + imessage+ "</span><br>";
+        $(html).appendTo(".ibox");
+
+    }
+
+    //*********************
+    $("#sendMessageBtn").click(function () {
+        var imessage = $("#messageContent").val();
+        var websocketMessage = imessage+"#"+accountName;
+        ws.send(websocketMessage);
+    });
+
+    //测试
+
+
+
+
+</script>
 
 
 </body>
