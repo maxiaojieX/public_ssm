@@ -22,7 +22,7 @@
     <style>
         .ibox{
             width: 1100px;
-            height: 415px;
+            height: 355px;
             background-color: white;
             z-index: inherit;
             overflow: auto;
@@ -65,13 +65,13 @@
     <!-- 右侧内容部分 -->
     <div class="content-wrapper">
         <section class="content">
-            <div class="ibox">
-                宇腾：我是智障
-
+            <div class="alert alert-info" role="alert" style="margin:0px ;"><center>公司群聊</center></div>
+            <div class="ibox" style="padding: 5px 15px">
+                <p class="text-muted">宇腾：我是智00障</p>
             </div>
             <div class="centerbox"></div>
             <div class="sendbox">
-
+                <textarea class="form-control" rows="3"></textarea>
             </div>
             <button type="button" class="btn btn-default ibtn">发送</button>
         </section>
@@ -91,13 +91,13 @@
 //    var ws = new WebSocket("ws://127.0.0.1:8888");
     ws.onopen = function () {
         //存入在线表
-        $.post("/chat/saveOnline?accountId="+accountId).done(function (json) {
-            if(json.state == "success"){
-                layer.msg("加入群聊...");
-            }
-        }).error(function () {
-            layer.msg("您的网络好像有点慢...");
-        });
+//        $.post("/chat/saveOnline?accountId="+accountId).done(function (json) {
+//            if(json.state == "success"){
+//                layer.msg("加入群聊...");
+//            }
+//        }).error(function () {
+//            layer.msg("您的网络好像有点慢...");
+//        });
 
     }
 
