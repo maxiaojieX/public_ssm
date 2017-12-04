@@ -48,6 +48,13 @@ public class ServiceBesiness {
         }
     }
 
+    /**
+     * 用户下线处理
+     * @param webSocket
+     */
+    public void userLeave(WebSocket webSocket) {
+        webSocketMap.remove(webSocket);
+    }
 
 
     /**

@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -61,6 +63,22 @@ public class ChatController {
         }
 
         return new AjaxStateJson("success","加入群聊成功");
+    }
+
+    Map<Integer,Integer> accountMap = new HashMap<>();
+    @PostMapping("/isOnline")
+    @ResponseBody
+    public AjaxStateJson isOnline(Integer id) {
+        System.out.println("comein>>>>>>>>>");
+        if(accountMap.get(id) == null) {
+            //不在线，可以加入群聊
+            System.out.println("join!!!!!!!!!!!!");
+            accountMap.put(id,id);
+            return new AjaxStateJson("error","不在线");
+        }else{
+            //在线，不能加入群聊
+            return new AjaxStateJson("success","在线");
+        }
     }
 
 }

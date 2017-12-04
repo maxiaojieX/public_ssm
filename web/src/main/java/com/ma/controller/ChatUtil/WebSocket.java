@@ -30,7 +30,7 @@ public class WebSocket extends WebSocketServer{
     @Override
     public void onClose(org.java_websocket.WebSocket conn, int message,
                         String reason, boolean remote) {
-       // userLeave(conn);
+        serviceBesiness.userLeave(conn);
     }
     /**
      * 触发异常事件

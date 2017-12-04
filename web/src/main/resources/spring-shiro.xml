@@ -67,7 +67,6 @@
                 /static/** = anon
                 /favicon.ico = anon
                 /login = anon
-                /account = roles["开发部"]
                 /** = user
             </value>
         </property>

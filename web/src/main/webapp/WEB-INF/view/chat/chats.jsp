@@ -33,7 +33,7 @@
             background-color: white;
             z-index: inherit;
             position: relative;
-            top:-20px;
+            padding: 5px 0px;
         }
         .centerbox{
             width: 1100px;
@@ -41,7 +41,6 @@
             background-color: #bdc3c7;
             z-index: inherit;
             position: relative;
-            top: -20px;
         }
         .ibtn{
             position: relative;
@@ -67,13 +66,13 @@
         <section class="content">
             <div class="alert alert-info" role="alert" style="margin:0px ;"><center>公司群聊</center></div>
             <div class="ibox" style="padding: 5px 15px">
-                <p class="text-muted">宇腾：我是智00障</p>
+
             </div>
             <div class="centerbox"></div>
             <div class="sendbox">
-                <textarea class="form-control" rows="3"></textarea>
+                <textarea class="form-control" id="messageContent" rows="3" style="height: 130px"></textarea>
             </div>
-            <button type="button" class="btn btn-default ibtn">发送</button>
+            <button type="button" id="sendMessageBtn" class="btn btn-default ibtn">发送</button>
         </section>
     </div>
 
@@ -88,41 +87,34 @@
     var accountName = "${accountName}";
 
     var ws = new WebSocket("ws://192.168.1.104:8888");
-//    var ws = new WebSocket("ws://127.0.0.1:8888");
+
     ws.onopen = function () {
-        //存入在线表
-//        $.post("/chat/saveOnline?accountId="+accountId).done(function (json) {
-//            if(json.state == "success"){
-//                layer.msg("加入群聊...");
-//            }
-//        }).error(function () {
-//            layer.msg("您的网络好像有点慢...");
-//        });
 
     }
-
-
+    /**
+     * 接收消息
+     * @param json
+     */
     ws.onmessage = function (json) {
         var newMessage = json.data;
-        //layer.msg(newMessage);
-        imessage = newMessage.substring(0,newMessage.lastIndexOf("#"));
 
-        //layer.msg(imessage);
-        var html = "<span>" + imessage+ "</span><br>";
+        var message1 = newMessage.substring(0,newMessage.lastIndexOf("#"));
+        var message2 = newMessage.substring(newMessage.lastIndexOf("#")+1);
+
+        var html = '<p class="text-muted">'+ message2 + ': '+ message1 +'</p>';
         $(html).appendTo(".ibox");
 
     }
 
-    //*********************
+    /**
+     * 按钮发送消息
+     */
     $("#sendMessageBtn").click(function () {
         var imessage = $("#messageContent").val();
         var websocketMessage = imessage+"#"+accountName;
+        $("#messageContent").val("");
         ws.send(websocketMessage);
     });
-
-    //测试
-
-
 
 
 </script>

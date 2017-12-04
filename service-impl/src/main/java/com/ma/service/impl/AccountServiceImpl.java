@@ -110,7 +110,7 @@ public class AccountServiceImpl implements AccountService {
         }
 
         //同步到企业微信
-        weixinUtil.createAccount(id,account.getUsername(),account.getPhone(),deptList);
+        //weixinUtil.createAccount(id,account.getUsername(),account.getPhone(),deptList);
 
         return id;
     }
