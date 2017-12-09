@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/11/14 0014.
@@ -47,7 +48,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public void saveTask(Task task, Account account) {
+    public void saveTask(Task task, Account account, Map<String,String> type) {
             task.setAid(account.getId());
             task.setCreateTime(new Date());
 
@@ -58,6 +59,8 @@ public class TaskServiceImpl implements TaskService {
             //创建一个Map给job传值
             JobDataMap jobDataMap = new JobDataMap();
             jobDataMap.put("message",task.getTitle());
+            jobDataMap.put("email",type.get("email"));
+            jobDataMap.put("Email",type.get("Email"));
 
             //根据job类动态创建一个jobDetail
             JobDetail jobDetail = JobBuilder

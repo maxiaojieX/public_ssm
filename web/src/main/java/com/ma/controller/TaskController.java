@@ -18,6 +18,8 @@ import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/11/14 0014.
@@ -61,12 +63,17 @@ public class TaskController {
     public String saveTask(String title,
                            String finishTime,
                            @RequestParam(required = false,defaultValue = "") String remindTime,
-                           Model model,HttpSession session) {
+                           Model model,HttpSession session,
+                           @RequestParam(required = false) String email,
+                           @RequestParam(required = false) String Email) {
 
-        //Account account = (Account) session.getAttribute("account");
         Account account = ShiroUtil.getCurretnAccount();
 
-        publicSave(title,finishTime,remindTime,account);
+        System.out.println(">>>>>>>"+email+"<<<<<<<<<<<<<");
+        Map<String,String> type = new HashMap<>();
+        type.put("email",email);
+        type.put("Email",Email);
+        publicSave(title,finishTime,remindTime,account,type);
 
         return "redirect:/task/my";
     }
@@ -106,7 +113,9 @@ public class TaskController {
                        Integer oldId,
                        String finishTime,
                        @RequestParam(required = false,defaultValue = "") String remindTime,
-                       Model model,HttpSession session) {
+                       Model model,HttpSession session,
+                       @RequestParam(required = false) String email,
+                       @RequestParam(required = false) String Email) {
         //删除
         //Account account = (Account) session.getAttribute("account");
         Account account = ShiroUtil.getCurretnAccount();
@@ -120,8 +129,11 @@ public class TaskController {
         }
         taskService.deleteTask(task);
 
+        Map<String,String> type = new HashMap<>();
+        type.put("email",email);
+        type.put("Email",Email);
         //新增
-        publicSave(title,finishTime,remindTime,account);
+        publicSave(title,finishTime,remindTime,account,type);
 
         return "redirect:/task/my";
     }
@@ -145,8 +157,9 @@ public class TaskController {
                                                   @RequestParam(required = false,defaultValue = "") String remindTime,
                                                   @RequestParam(required = false) Integer cid,
                                                   @RequestParam(required = false) Integer sid,
-                                                  HttpSession session) {
-        //Account account = (Account) session.getAttribute("account");
+                                                  HttpSession session,
+                                           @RequestParam(required = false) String email,
+                                           @RequestParam(required = false) String Email) {
         Account account = ShiroUtil.getCurretnAccount();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -167,7 +180,13 @@ public class TaskController {
                 Date remind = sdf2.parse(remindTime);
                 t.setRemindTime(remind);
             }
-            taskService.saveTask(t,account);
+
+            //拓展提醒方式
+            Map<String,String> type = new HashMap<>();
+            type.put("email",email);
+            type.put("Email",Email);
+
+            taskService.saveTask(t,account,type);
 
         } catch (ParseException e) {
             throw new ServiceException("日期格式异常");
@@ -204,7 +223,8 @@ public class TaskController {
     public void publicSave(String title,
                            String finishTime,
                            String remindTime,
-                           Account account){
+                           Account account,
+                           Map<String,String> type){
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
@@ -218,7 +238,9 @@ public class TaskController {
                 Date remind = sdf2.parse(remindTime);
                 t.setRemindTime(remind);
             }
-            taskService.saveTask(t,account);
+
+
+            taskService.saveTask(t,account,type);
 
         } catch (ParseException e) {
             throw new ServiceException("日期格式异常");

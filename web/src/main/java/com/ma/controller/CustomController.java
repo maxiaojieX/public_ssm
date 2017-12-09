@@ -264,7 +264,7 @@ public class CustomController {
         //如果存在判断该客户是否属于自己的客户
         //Account account = (Account) session.getAttribute("account");
         Account account = ShiroUtil.getCurretnAccount();
-        if(customer0.getAccountId() != account.getId()){
+        if(!customer0.getAccountId().equals(account.getId())){
             //不属于自己客户
             throw new Status403Exception("对不起，您暂无权查看该客户");
         }

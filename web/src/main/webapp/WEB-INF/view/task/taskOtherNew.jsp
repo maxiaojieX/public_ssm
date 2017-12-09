@@ -20,6 +20,14 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        .myEmail{
+            position: relative;
+            right: -150px;
+            top:-28px;
+
+        }
+    </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
@@ -69,6 +77,17 @@
                             <label>提醒时间</label>
                             <input type="text" class="form-control" id="datepicker2" name="remindTime">
                         </div>
+                        <div class="form-group">
+                            <label>提醒方式</label>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="weixin">微信提醒 　　<span id="sp"><input type="checkbox" id="emailT" name="email">邮件提醒</span>
+                                    <div class="col-sm-10 myEmail">
+                                        <input type="hidden"  class="form-control" id="inputEmail3" placeholder="正确的邮箱地址方便及时收到提醒" name="Email">
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <!-- /.box-body -->
@@ -107,6 +126,10 @@
 <script src="/static/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
 <script src="/static/plugins/validate/jquery.validate.min.js"></script>
 <script>
+
+    $("#sp").click(function () {
+        $("#inputEmail3").attr("type","email");
+    });
 
     $("#saveTaskBtn").click(function () {
         $("#addTaskForm").submit();
