@@ -65,7 +65,8 @@ public class TaskController {
                            @RequestParam(required = false,defaultValue = "") String remindTime,
                            Model model,HttpSession session,
                            @RequestParam(required = false) String email,
-                           @RequestParam(required = false) String Email) {
+                           @RequestParam(required = false) String Email,
+                           @RequestParam(required = false) String weixin) {
 
         Account account = ShiroUtil.getCurretnAccount();
 
@@ -73,6 +74,7 @@ public class TaskController {
         Map<String,String> type = new HashMap<>();
         type.put("email",email);
         type.put("Email",Email);
+        type.put("weixin",weixin);
         publicSave(title,finishTime,remindTime,account,type);
 
         return "redirect:/task/my";
@@ -115,7 +117,8 @@ public class TaskController {
                        @RequestParam(required = false,defaultValue = "") String remindTime,
                        Model model,HttpSession session,
                        @RequestParam(required = false) String email,
-                       @RequestParam(required = false) String Email) {
+                       @RequestParam(required = false) String Email,
+                       @RequestParam(required = false) String weixin) {
         //删除
         //Account account = (Account) session.getAttribute("account");
         Account account = ShiroUtil.getCurretnAccount();
@@ -132,6 +135,7 @@ public class TaskController {
         Map<String,String> type = new HashMap<>();
         type.put("email",email);
         type.put("Email",Email);
+        type.put("weixin",weixin);
         //新增
         publicSave(title,finishTime,remindTime,account,type);
 
@@ -159,7 +163,8 @@ public class TaskController {
                                                   @RequestParam(required = false) Integer sid,
                                                   HttpSession session,
                                            @RequestParam(required = false) String email,
-                                           @RequestParam(required = false) String Email) {
+                                           @RequestParam(required = false) String Email,
+                                           @RequestParam(required = false) String weixin) {
         Account account = ShiroUtil.getCurretnAccount();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -185,6 +190,7 @@ public class TaskController {
             Map<String,String> type = new HashMap<>();
             type.put("email",email);
             type.put("Email",Email);
+            type.put("weixin",weixin);
 
             taskService.saveTask(t,account,type);
 

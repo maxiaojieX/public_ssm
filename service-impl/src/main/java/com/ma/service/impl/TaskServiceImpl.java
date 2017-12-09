@@ -61,6 +61,7 @@ public class TaskServiceImpl implements TaskService {
             jobDataMap.put("message",task.getTitle());
             jobDataMap.put("email",type.get("email"));
             jobDataMap.put("Email",type.get("Email"));
+            jobDataMap.put("weixin",type.get("weixin"));
 
             //根据job类动态创建一个jobDetail
             JobDetail jobDetail = JobBuilder

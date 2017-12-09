@@ -24,26 +24,26 @@ public class MyJob implements Job {
         String message = (String) jobDataMap.get("message");
         String email = (String) jobDataMap.get("email");
         String Email = (String) jobDataMap.get("Email");
+        String weixin = (String) jobDataMap.get("wexin");
 
         if(StringUtils.isNotEmpty(email)) {
             //需要发送邮件
             SendMail.send("15239131507@163.com","ma000000",Email,"任务提醒",message);
         }
 
+        if(StringUtils.isNotEmpty(weixin)){
+            //微信提醒
+            JmsTemplate jmsTemplate = (JmsTemplate) MySpringContext.wantBean("jmsTemplate");
 
+            jmsTemplate.send("wexinMessage-Quere", new MessageCreator() {
+                @Override
+                public Message createMessage(Session session) throws JMSException {
+                    String json = "{\"id\":\"MaXiaoJie\",\"message\":\""+message+"\"}";
+                    TextMessage textMessage = session.createTextMessage(json);
+                    return textMessage;
+                }
+            });
 
-        //微信提醒
-        JmsTemplate jmsTemplate = (JmsTemplate) MySpringContext.wantBean("jmsTemplate");
-
-        jmsTemplate.send("wexinMessage-Quere", new MessageCreator() {
-            @Override
-            public Message createMessage(Session session) throws JMSException {
-                String json = "{\"id\":\"MaXiaoJie\",\"message\":\""+message+"\"}";
-                TextMessage textMessage = session.createTextMessage(json);
-                return textMessage;
-            }
-        });
-
-
+        }
     }
 }

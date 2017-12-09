@@ -131,7 +131,7 @@ public class RecordController {
             throw new Stauts404Exception("该销售机会不存在");
         }
 
-        if(saleChance.getAid() != account.getId()){
+        if(!saleChance.getAid().equals(account.getId())){
             throw new Status403Exception("您无权查看");
         }
         return saleChance;

@@ -86,7 +86,7 @@
     var accountId= ${accountId};
     var accountName = "${accountName}";
 
-    var ws = new WebSocket("ws://192.168.1.104:8888");
+    var ws = new WebSocket("ws://192.168.1.105:8888");
 
     ws.onopen = function () {
 
@@ -116,6 +116,18 @@
         ws.send(websocketMessage);
     });
 
+    $(document).keypress(function(e) {
+        var eCode = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+        var imessage = $("#messageContent").val();
+
+        if (eCode == 13 && imessage != null && imessage != ""){
+
+            var websocketMessage = imessage+"#"+accountName;
+            $("#messageContent").val("");
+            ws.send(websocketMessage);
+
+        }
+    });
 
 </script>
 

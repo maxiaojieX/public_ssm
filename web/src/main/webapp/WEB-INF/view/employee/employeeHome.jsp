@@ -34,49 +34,45 @@
 
     <!-- 右侧内容部分 -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <%--<section class="content-header">--%>
-            <%--<h1>--%>
-                <%--Blank page--%>
-                <%--<small>it all starts here</small>--%>
-            <%--</h1>--%>
-            <%--<ol class="breadcrumb">--%>
-                <%--<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>--%>
-                <%--<li><a href="#">Examples</a></li>--%>
-                <%--<li class="active">Blank page</li>--%>
-            <%--</ol>--%>
-        <%--</section>--%>
-
-        <!-- Main content -->
         <section class="content">
+            <br>
 
-            <%--<!-- Default box -->--%>
-            <%--<div class="box">--%>
-                <%--<div class="box-header with-border">--%>
-                    <%--<h3 class="box-title">Title</h3>--%>
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                </ol>
 
-                    <%--<div class="box-tools pull-right">--%>
-                        <%--<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">--%>
-                            <%--<i class="fa fa-minus"></i></button>--%>
-                        <%--<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">--%>
-                            <%--<i class="fa fa-times"></i></button>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-                <%--<div class="box-body">--%>
-                    <%--Start creating your amazing application!--%>
-                <%--</div>--%>
-                <%--<!-- /.box-body -->--%>
-                <%--<div class="box-footer">--%>
-                    <%--Footer--%>
-                <%--</div>--%>
-                <%--<!-- /.box-footer-->--%>
-            <%--</div>--%>
-            <!-- /.box -->
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <img src="..." alt="...">
+
+                    </div>
+                    <div class="item">
+                        <img src="..." alt="...">
+
+                    </div>
+
+                </div>
+
+                <!-- Controls -->
+                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+
+
 
         </section>
-        <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
 
 
 
