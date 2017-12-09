@@ -24,7 +24,7 @@ public class MyJob implements Job {
         String message = (String) jobDataMap.get("message");
         String email = (String) jobDataMap.get("email");
         String Email = (String) jobDataMap.get("Email");
-        String weixin = (String) jobDataMap.get("wexin");
+        String weixin = (String) jobDataMap.get("weixin");
 
         if(StringUtils.isNotEmpty(email)) {
             //需要发送邮件
