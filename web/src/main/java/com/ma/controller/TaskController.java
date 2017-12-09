@@ -83,7 +83,7 @@ public class TaskController {
         if(task == null){
             throw new ServiceException("Not found this task");
         }
-        if(task.getAid() != account.getId()){
+        if(!task.getAid().equals(account.getId())){
             throw  new Status403Exception("无操作权限");
         }
 
@@ -115,7 +115,7 @@ public class TaskController {
         if(task == null){
             throw new ServiceException("Not found this task");
         }
-        if(task.getAid() != account.getId()){
+        if(!task.getAid().equals(account.getId())){
             throw  new Status403Exception("无操作权限");
         }
         taskService.deleteTask(task);
@@ -189,7 +189,7 @@ public class TaskController {
         if(task == null){
             throw new ServiceException("Not found this task");
         }
-        if(task.getAid() != account.getId()){
+        if(!task.getAid().equals(account.getId())){
             throw  new Status403Exception("无操作权限");
         }
 

@@ -23,27 +23,16 @@ public class MyJob implements Job {
 
         System.out.println("***********" + message + "*************");
 
-        //把消息添加至ActiveMQ
-//        try {
-//            ApplicationContext applicationContext = (ApplicationContext) jobExecutionContext.getScheduler().getContext().get("springApplicationContext");
-//            JmsTemplate jmsTemplate = (JmsTemplate) applicationContext.getBean("jmsTemplate");
+        JmsTemplate jmsTemplate = (JmsTemplate) MySpringContext.wantBean("jmsTemplate");
 
-            //*****测试区
-            JmsTemplate jmsTemplate = (JmsTemplate) MySpringContext.wantBean("jmsTemplate");
-            //*****
-
-            jmsTemplate.send("wexinMessage-Quere", new MessageCreator() {
-                @Override
-                public Message createMessage(Session session) throws JMSException {
-                    String json = "{\"id\":\"MaXiaoJie\",\"message\":\"Hello,Message from JMS\"}";
-                    TextMessage textMessage = session.createTextMessage(json);
-                    return textMessage;
-                }
-            });
-
-//        } catch (SchedulerException e) {
-//            e.printStackTrace();
-//        }
+        jmsTemplate.send("wexinMessage-Quere", new MessageCreator() {
+            @Override
+            public Message createMessage(Session session) throws JMSException {
+                String json = "{\"id\":\"MaXiaoJie\",\"message\":\""+message+"\"}";
+                TextMessage textMessage = session.createTextMessage(json);
+                return textMessage;
+            }
+        });
 
 
     }
