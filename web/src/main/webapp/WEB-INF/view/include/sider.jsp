@@ -83,7 +83,7 @@
                 <li class="${param.menu == 'list' ? 'active' : ''}"><a href="/account/list2"><i class="fa fa-users"></i> <span>员工管理</span></a></li>
             </shiro:hasRole>
             <%--<li><a href="/chat/toChat"   onclick="window.open(this.href,'_blank','scrollbars=0,resizable=0,top=123,left=281,width=680,height=480');return    false"><i class="fa fa-users"></i> <span>公司微信</span></a></li>--%>
-            <li><a href="/chat/toChat"><i class="fa fa-weixin"></i> <span>公司微信</span></a></li>
+            <li><a href="/chat/toChat"><i class="fa fa-weixin"></i> <span>群聊大厅</span></a></li>
             <!--<li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
             <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>-->
         </ul>
